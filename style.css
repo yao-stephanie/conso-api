@@ -1,0 +1,96 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+header{
+    background: url(image/wine-jpeg);
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+}
+
+.navbar{
+    width: 100%;
+    padding: 40px 0 20px;
+}
+
+.menu{
+    display: flex;
+    list-style: none;
+    
+}
+
+.menu li {
+    margin: 0 40px;
+    
+}
+
+.menu li a{
+    color: #fff;
+    text-decoration: none;
+    font-size: 25px;
+}
+
+#formulaire{
+    position: absolute;
+    top: 50%;
+}
+
+.form{
+    display: flex;
+    align-items: center;
+}
+
+#formulaire input[type=text]{
+    width: 500px;
+    height: 50px;
+    outline: none;
+    border: 0;
+    padding-left: 15px;
+}
+
+.imag{
+    background-color: gold;
+    padding: 13px;
+    cursor: pointer;
+}
+
+/* section1 */
+
+section{
+    padding: 70px;
+}
+
+.card-group{
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.pagination{
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+
+}
+
+.number{
+    padding: 10px;
+    border: 1px solid #333;
+    margin: 0 10px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+
+
