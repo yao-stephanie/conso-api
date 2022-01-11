@@ -7,7 +7,6 @@ let affiche = document.querySelector(".card-text");
 let afficheDate = document.querySelector(".text-date");
 let apikey = "7843f8d22a43911f15301ef8d76338ae";
 
-
 let numberItems = 8;
 let fist = 0;
 
@@ -73,8 +72,6 @@ text.addEventListener("submit", (e) => {
   }
 });
 
-
-
 text.addEventListener("keyup", (e) => {
   e.preventDefault();
   console.log(saisi.value);
@@ -90,52 +87,59 @@ text.addEventListener("keyup", (e) => {
   }
 });
 
-
-
-function page1(){
-  console.log("cool")
-  axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=1`)
-  .then((resp) =>DisplayMovie(resp))
+function page1() {
+  console.log("cool");
+  axios
+    .get(
+      `https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=1`
+    )
+    .then((resp) => DisplayMovie(resp));
 }
 
-function page2(){
-  console.log("cool")
-  axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=2`)
-  .then((resp) =>DisplayMovie(resp))
+function page2() {
+  console.log("cool");
+  axios
+    .get(
+      `https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=2`
+    )
+    .then((resp) => DisplayMovie(resp));
 }
 
-function page3(){
-  console.log("cool")
-  axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=3`)
-  .then((resp) =>DisplayMovie(resp))
+function page3() {
+  console.log("cool");
+  axios
+    .get(
+      `https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=3`
+    )
+    .then((resp) => DisplayMovie(resp));
 }
 
-
-let ajout = 3
-function Next(){
-  ajout++
-  console.log("ajout")
-  axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=${ajout}`)
-  .then((resp) =>DisplayMovie(resp))
+let ajout = 3;
+function Next() {
+  ajout++;
+  console.log("ajout");
+  axios
+    .get(
+      `https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=${ajout}`
+    )
+    .then((resp) => DisplayMovie(resp));
 }
 
-
-
-
-let diminue = -1
-function prevew(){
-  diminue--
-  console.log("ajout")
-  axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=${diminue}`)
-  .then((resp) =>DisplayMovie(resp))
+let diminue = -1;
+function prevew() {
+  diminue--;
+  console.log("ajout");
+  axios
+    .get(
+      `https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=${diminue}`
+    )
+    .then((resp) => DisplayMovie(resp));
 }
-
-
 
 function DisplayMovie(data) {
   card.innerHTML = "";
   let info = data.data.results;
-  console.log(info)
+  // console.log(info)
   if (info.length != 0) {
     for (let i = 0; i < info.length; i++) {
       card.innerHTML += `
@@ -156,13 +160,13 @@ function DisplayMovie(data) {
   }
 }
 
-function DisplayMo(id){
+function DisplayMo(id) {
   console.log(id);
   fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${apikey}`)
-  .then((repon) => repon.json())
-  .then((data)=>{
-    console.log(data)
-    card.innerHTML = `
+    .then((repon) => repon.json())
+    .then((data) => {
+      console.log(data);
+      card.innerHTML = `
 
     <div class="bloc col-4">
     <img src="https://image.tmdb.org/t/p/w500${data.poster_path}" class="card-img-top" alt="image1">
@@ -175,10 +179,55 @@ function DisplayMo(id){
            </div>
     </div>
    `;
-  })
+    });
 }
 
+function loadPage() {
+  let page = 1;
 
+  window.addEventListener("scroll", (e) => {
+    //console.log(scrollY)
 
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    let defiler = scrollHeight - clientHeight;
 
+    if (scrollY == defiler) {
+      page++;
 
+      fetch(
+          `https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=${page}`
+        )
+        .then((resp) => resp.json())
+        .then(data =>{
+          let ElementData = data.results
+
+          for (let i = 0; i < ElementData.length; i++) {
+            card.innerHTML += `
+                  <div class="card-group col-3">
+              <div class="card" onclick="DisplayMo(${ElementData[i].id})">
+                <img src="https://image.tmdb.org/t/p/w500${ElementData[i].poster_path}" class="card-img-top" alt="image1">
+                <div class="card-body">
+                  <a href="#" id="lien">
+                  <h5 class="card-title">${ElementData[i].title}</h5>
+                  </a>
+                  <p class="card-text" style ="display:none">${ElementData[i].overview}</p>
+                  <p class="text-date" style = "display:none" style = "color:red">${ElementData[i].release_date}</p>
+                </div>
+              </div>
+              </div>
+                  `;
+          }
+        })
+      
+    }
+  });
+}
+
+// loadPage();
+
+let timeOut;
+function attente (){
+  timeOut = window.setTimeout(loadPage,1000)
+}
+
+attente ();
